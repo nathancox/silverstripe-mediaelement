@@ -13,7 +13,9 @@
 		$Content
 	
 		<% control Videos %>
-		<% include VideoTag %>
+		<div class='video'>
+			$VideoTag
+		</div>
 		<% end_control %>
 	
 	<% if Menu(2) %>

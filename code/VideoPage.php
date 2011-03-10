@@ -58,5 +58,9 @@ class VideoPage extends Page {
 	
 }
 class VideoPage_Controller extends Page_Controller {
+	function init() {
+		parent::init();
 		
+	//	Requirements::customScript
+	}
 }

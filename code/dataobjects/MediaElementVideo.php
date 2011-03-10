@@ -19,24 +19,25 @@ class MediaElementVideo extends DataObject {
 	function getCMSFields_forPopup() {
 		$fields = new FieldSet();
 		
-		$tabset = new HorizontalTabSet('Root');
-		$tabset->push(new Tab('Main'));
-		$tabset->push(new Tab('Formats'));
-		$fields->push($tabset);
+	//	$tabset = new HorizontalTabSet('Root');
+	//	$tabset->push(new Tab('Main'));
+	//	$tabset->push(new Tab('Formats'));
+	//	$fields->push($tabset);
 		
-		$fields->addFieldToTab('Root.Main', new TextField('Title', 'Video Title'));
+		$fields->push(new TextField('Title', 'Video Title'));
+
 		
-		
+		$fields->push($blurbField = new SimpleTinyMCEField('Blurb'));
 		$config = HtmlEditorConfig::get_active();
 		$contentCSS = $config->getOption('content_css');
 		// hack!
 		$contentCSS = '/'.str_replace(', ', ', /', $contentCSS);
-		
-		$fields->addFieldToTab('Root.Main', $blurbField = new SimpleTinyMCEField('Blurb'));
 		$blurbField->setContentCSS($contentCSS);
 		$blurbField->setExtraOptions("body_class : 'typography'");
 		
-		$fields->addFieldToTab('Root.Main', new ImageField('Poster', 'Poster Image'));
+		$fields->push(new ImageField('Poster', 'Poster Image'));
+		
+		
 		
 		
 		$videoManager = new FileDataobjectManager(
@@ -58,7 +59,7 @@ class MediaElementVideo extends DataObject {
 	//	$videoManager->setWideMode(true);
 		$videoManager->setPopupWidth(600);
 		$videoManager->setDefaultView('list');
-		$fields->addFieldToTab('Root.Formats', $videoManager);
+		$fields->push($videoManager);
 //		$fields->push($videoManager);
 		
 		return $fields;
@@ -99,5 +100,16 @@ class MediaElementVideo extends DataObject {
 			return implode(', ', $extensions);
 		}
 	}
+	
+	function VideoTag() {
+		Requirements::javascript('mediaelement/thirdparty/mediaelement-and-player.min.js');
+		Requirements::customScript("$(document).ready(function(){
+				$('video,audio').mediaelementplayer();
+			});", 
+			'globalInitMediaElement'
+		);
+		return $this->renderWith('VideoTag');
+	}
+	
 	
 }

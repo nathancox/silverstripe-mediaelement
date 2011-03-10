@@ -4,7 +4,6 @@
 	<source type="$Type" src="$Link" />
 	<% end_control %>
 	
-	
 	<!-- Fallback flash player for no-HTML5 browsers with JavaScript turned off -->
 	<object width="$VideoPage.Width" height="$VideoPage.Height" type="application/x-shockwave-flash" data="mediaelement/thirdparty/flashmediaelement.swf"> 		
 		<param name="movie" value="mediaelement/thirdparty/flashmediaelement.swf" /> 
@@ -16,5 +15,8 @@
 		<% end_if %>
 	</object>
 </video>
-<% require javascript(mediaelement/thirdparty/mediaelement-and-player.min.js) %>
+
+
+
 <% require css(mediaelement/thirdparty/mediaelementplayer.css) %>
+<% require css(mediaelement/thirdparty/mejs-skin.css) %>
